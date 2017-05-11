@@ -261,8 +261,13 @@ public class MainActivity extends AppCompatActivity {
                             operators.push(textLine[x]);
                         }
                     }
-                    else
+                    else //if strong operator, add to stack. If / then /, add first divide to queue and add second divide to stack (25/5/5 -> 25 5 / 5 / == 1)
                     {
+                        if (textLine [x] == '/' && !operators.isEmpty() && operators.peek() == '/')
+                        {
+                            postfix.add (Character.toString(operators.pop()));
+                            operators.push(textLine[x]);
+                        }
                         operators.push(textLine[x]);
                     }
                     index = x + 1;
@@ -297,13 +302,13 @@ public class MainActivity extends AppCompatActivity {
             {
                 try {
                         math.push(Double.parseDouble(postfix.remove()));
-;               }
+               }
                 catch (NumberFormatException e)
                 {
                     //Syntax error dialogue
                     return;
                 }
-                catch (Exception e)
+                catch (NumberFormatException e)
                 {
                     return;
                 }
